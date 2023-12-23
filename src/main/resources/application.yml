@@ -1,10 +1,20 @@
 ## http://localhost:8080/
 server : 
-  port : 8080
-  
+  port : 80
+
 spring :
-  datasource :
-    url :   jdbc:oracle:thin:@localhost:1521/XE
-    username : id
-    password : pwd
-    driver-class-name : oracle.jdbc.OracleDriver
+   datasource :
+     url :   jdbc:log4jdbc:oracle:thin:@localhost:1521:xe
+     username : 
+     password : 
+     driver-class-name : net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+
+mybatis:  
+  configuration:    
+    multiple-result-sets-enabled: false    
+    map-underscore-to-camel-case: true    
+    call-setters-on-nulls: true        
+    jdbc-type-for-null: varchar    
+    default-fetch-size: 500  
+  mapper-locations: classpath:/mapper/*.xml
+  type-aliases-package : com.springboot.spring.mapper.*
