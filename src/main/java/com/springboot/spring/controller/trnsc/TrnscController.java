@@ -14,6 +14,7 @@ public class TrnscController {
     
     @GetMapping("/")
     public String mainView(Model model) {
+        log.debug("메인 페이지 호출");
         model.addAttribute("title", "거래내역");
         return "view/trnsc/trnscView";
     }
