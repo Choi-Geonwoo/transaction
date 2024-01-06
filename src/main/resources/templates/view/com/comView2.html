@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lagn="ko" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}">
+
+<!-- index.html 고유 CSS 추가 -->
+<th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/CSS/com.css}" >
+</th:block>
+<!-- index.html 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+  <script th:src="@{/JS/com/com.js}"></script>
+</th:block>
+
+<!-- Content -->
+<div layout:fragment="content">
+  
+    <div class="container">
+        <table class="_table">
+          <thead>
+            <tr>
+              <th>이름</th>
+              <th>국가</th>
+              <th>전화번호</th>
+              <th width="30px">
+                <div class="action_container">
+                  <button class="success" onclick="add_tr('table_body')">추가
+                  </button>
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody id="table_body">
+            <tr>
+              <td>
+                <input type="text" class="form_control" placeholder="김철수">
+              </td>
+              <td>
+                <input type="text" class="form_control" placeholder="한국">
+              </td>
+              <td>
+                <input class="form_control" placeholder="010-1234-1234">
+              </td>
+              <td>
+                <div class="action_container">
+                  <button class="danger" onclick="remove_tr(this)">삭제 </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+</div>
+</html>

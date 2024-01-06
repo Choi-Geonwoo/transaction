@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.springboot.spring.mapper.com.CodeMapper">
+
+<insert id="sectionInsert" parameterType="Map" >
+    INSERT INTO /* SQL ID : CodeMapper.sectionInsert*/
+        SECTION
+    (   NO, 
+        SECTION_CD, 
+        SECTION_NM, 
+        USE_YN, 
+        REG_YMD
+    )
+    VALUES(
+        SECTION_SEQ.NEXTVAL, 
+        #{SECTION_CD}, 
+        #{SECTION_NM}, 
+        #{USE_YN}, 
+        SYSDATE )
+</insert>
+
+<select id="sectionSelect" resultType="Map">
+    select /* SQL ID : CodeMapper.sectionSelect*/
+        NO, 
+        SECTION_CD, 
+        SECTION_NM, 
+        USE_YN, 
+        TO_CHAR(REG_YMD, 'YYYY-MM-DD') AS REG_YMD
+    FROM
+        SECTION
+    ORDER BY NO
+</select>
+
+<update id="sectionUpdate" parameterType="Map">
+    UPDATE /* SQL ID : CodeMapper.sectionUpdate*/ 
+        SECTION
+      SET   
+            SECTION_NM = #{SECTION_NM}, 
+            USE_YN = #{USE_YN}, 
+            REG_YMD = SYSDATE
+    WHERE
+        NO = #{NO}
+</update>
+
+</mapper>

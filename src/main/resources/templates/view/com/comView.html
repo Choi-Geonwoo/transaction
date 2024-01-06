@@ -1,15 +1,140 @@
-<!--resources/templates/thymeleafEx.html-->
-<!DOCTYPE html>
-<html lang="ko" xmlns:th="http//www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>거래내역</title>
-</head>
-<body>
- 
-    <label th:text="${title}"></label> 
-    <a href="/">거래내역</a>
+﻿<!DOCTYPE html>
+<html lagn="ko" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}">
 
-</body>
+<!-- index.html 고유 CSS 추가 -->
+<th:block layout:fragment="css">
+      <link rel="stylesheet" th:href="@{/CSS/comView.css}" >
+      <link rel="stylesheet" th:href="@{/CSS/com.css}" >
+</th:block>
+<!-- index.html 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+      <script th:src="@{/JS/com/comView.js}"></script>
+      <script th:src="@{/JS/com/com.js}"></script>
+</th:block>
+
+<!-- Content -->
+<div layout:fragment="content">
+    <br>
+    <h2>대분류</h2>
+    <br>
+    <table class="table01 " id="example-table-1">
+      <thead>
+        <tr>
+          <th class="pin"> </th>
+          <th>대분류코드</th>
+          <th>대분류코드명</th>
+          <th>사용여부</th>
+          <th>등록일자</th>
+          <th colspan="2">구분</th>
+        </tr>
+        
+      </thead>
+      <tbody>
+          <tr>
+            <th >Row</th>
+            <td><input type="text" th:name="SECTION_CD" th:id="SECTION_CD"></td>
+            <td><input type="text" th:name="SECTION_NM" th:id="SECTION_NM"></td>
+            <td>
+              <select th:name="USE_YN" th:id="USE_YN"  class="select">
+                <option th:name="USE_YN" th:id="USE_YN" value="Y">사용</option>
+                <option th:name="USE_YN" th:id="USE_YN" value="N">미사용</option>
+              </select>
+            </td>
+            <td><input type="text" th:name="REG_YMD" th:id="REG_YMD" th:value="${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd')}"></td><!--현재날짜-->
+            <td colspan="2">
+              
+              <div class="action_container">
+                <button style="width: 210px;"  class="success" onclick="sectopmInput()">추가</button>
+              </div>
+            </td>
+            
+          </tr>
+          
+          <tr th:each="list : ${list}">
+            <th th:text="${list.NO}"></th>
+            <td th:text="${list.SECTION_CD}"></td>
+            <td ><input type="text" th:name="I_S_SECTION_NM" th:id="I_S_SECTION_NM" th:value="${list.SECTION_NM}"></td>
+            <td >
+              <select th:name="I_S_USE_YN" th:id="I_S_USE_YN"  class="select">
+                <option th:name="I_S_USE_YN" th:id="I_S_USE_YN" th:value="Y" th:selected="${list.USE_YN eq 'Y'}">사용</option>
+                <option th:name="I_S_USE_YN" th:id="I_S_USE_YN" th:value="N" th:selected="${list.USE_YN eq 'N'}" >미사용</option>
+              </select>
+            </td>
+            <td th:text="${list.REG_YMD}"></td>
+            <td><input type='button' value='수정' th:onclick="sectopmUpdate2(([[${list.NO}]]))" class="success"/></td>
+            <td><input type='button' value='삭제' th:onclick="sectopmUpdate2(([[${list.NO}]]))" class="danger"/></td>
+          </tr>
+
+      </tbody>
+    </table>
+
+    <br><br>
+
+
+    <h2>중분류</h2>
+    <br>
+    <div class="action_container">
+      <button class="success" onclick="add_tr('table_body')">추가 </button>
+      &nbsp;&nbsp;
+      <button class="danger" onclick="delRow('table_body')">삭제 </button>
+      &nbsp;&nbsp;
+      <button class="btn_save" onclick="getSelectedValues('table02');">저장</button>
+    </div>
+    
+    <br>
+    <br>
+
+    <table class="table02" id="table02">
+      <thead>
+        <tr>
+          <th class="pin">row</th>
+          <th style="width: 10px;"><input type="checkbox"></th>
+          <th>대분류코드</th>
+          <th>중분류코드</th>
+          <th>중분류코드명</th>
+          <th>값01</th>
+          <th>값02</th>
+          <th>값03</th>
+          <th>값04</th>
+          <th>값05</th>
+          <th>값06</th>
+          <th>값07</th>
+          <th>값08</th>
+          <th>값09</th>
+          <th>값10</th>
+          <th>사용여부</th>
+          <th>등록일자</th>
+        </tr>
+      </thead>
+      <tbody id="table_body">
+        <tr>
+          <th>0</th>
+          <td style="width: 10px;"><input type="checkbox" class="checkboxName"></td>
+          <td><input type="text" th:name="I_C_SECTION_CD" th:id="I_C_SECTION_CD" placeholder="대분류코드" readonly></td>
+          <td><input type="text" th:name="I_C_CLSFC_CD" th:id="I_C_CLSFC_CD" placeholder="중분류코드"></td>
+          <td><input type="text" th:name="I_C_CLSFC_NM" th:id="I_C_CLSFC_NM" placeholder="중분류명"></td>
+          <td><input type="text" th:name="I_C_ITEM_01" th:id="I_C_ITEM_01" placeholder="항목01"></td><!--item-->
+          <td><input type="text" th:name="I_C_ITEM_02" th:id="I_C_ITEM_02" placeholder="항목02"></td>
+          <td><input type="text" th:name="I_C_ITEM_03" th:id="I_C_ITEM_03" placeholder="항목03"></td>
+          <td><input type="text" th:name="I_C_ITEM_04" th:id="I_C_ITEM_04" placeholder="항목04"></td>
+          <td><input type="text" th:name="I_C_ITEM_05" th:id="I_C_ITEM_05" placeholder="항목05"></td>
+          <td><input type="text" th:name="I_C_ITEM_06" th:id="I_C_ITEM_06" placeholder="항목06"></td>
+          <td><input type="text" th:name="I_C_ITEM_07" th:id="I_C_ITEM_07" placeholder="항목07"></td>
+          <td><input type="text" th:name="I_C_ITEM_08" th:id="I_C_ITEM_08" placeholder="항목08"></td>
+          <td><input type="text" th:name="I_C_ITEM_09" th:id="I_C_ITEM_09" placeholder="항목09"></td>
+          <td><input type="text" th:name="I_C_ITEM_10" th:id="I_C_ITEM_10" placeholder="항목10"></td>
+          <td>
+            <select th:name="I_C_USE_YN" th:id="I_C_USE_YN"  class="select">
+              <option value="Y">사용</option>
+              <option value="N">미사용</option>
+            </select>
+          </td>
+          <td><input type="text" th:name="I_C_REG_YMD" th:id="I_C_REG_YMD" th:value="${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd')}"></td>
+        </tr>
+      </tbody>
+    </table>
+</div>
 </html>

@@ -1,6 +1,10 @@
-<html lagn="ko" xmlns:th="http://www.thymeleaf.org">
-<!--headerFragment ����-->
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org" >
+<!--headerFragment 선언-->
 <div th:fragment="headerFragment">
-    <h1>Header Section</h1>
+    <h1 th:text="${title}"></h1>
+    <a href="/">홈</a>
+    <a href="/com/comView">공통코드관리</a>
+    <a href="/com/comView2">공통코드관리2</a>
+
 </div>
 </html>
