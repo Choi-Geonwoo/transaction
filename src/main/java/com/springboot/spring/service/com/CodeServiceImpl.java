@@ -68,4 +68,42 @@ public class CodeServiceImpl implements CodeService {
         }
         return result;
     }
+
+    // 데이터 등록
+    @Override
+    public String clsfInsert(String jsonData) {
+        log.info("호출 : CodeServiceImpl.clsfInsert ");
+        String result = "true";
+        int cnt = 0;
+        try {
+            List<Map<Object, Object>> listMap = Conversion.mapList(jsonData);
+            for (Map<Object,Object> map : listMap) {
+                log.info("toString  " + map.toString());
+               cnt += codeMapper.clsfInsert(map);
+            }
+            if(0 == cnt){
+                result = "false";
+            }
+        } catch (Exception e) {
+                result = "false";
+            throw new UnsupportedOperationException("Unimplemented method 'clsfInsert'");
+        }
+        return result;
+    }
+
+    // 중분류 코드 조회
+    @Override
+    public List<Map> clsfSelect(String jsonData) {
+        log.info("호출 : CodeServiceImpl.clsfSelect ");
+        log.info("re " + jsonData);
+        List<Map> resultList = new ArrayList<>();
+        try {
+            resultList = codeMapper.clsfSelect(jsonData);
+        } catch (Exception e) {
+            resultList = null;
+            log.error("error ", e.toString());
+            throw new UnsupportedOperationException("Unimplemented method 'clsfSelect'");
+        }
+        return resultList;
+    }
 }

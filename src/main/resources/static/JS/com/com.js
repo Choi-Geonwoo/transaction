@@ -14,6 +14,7 @@ const removeModal = () => {
     removeModal();
   };
 
+  //모달창 호출
   const showModal = (data) => {
     const modal = document.createElement('div');
     modal.classList.add('modal-background');
@@ -80,25 +81,20 @@ function delRow(This){
   }
 }
 
-// 체크박스 선택한 값만
-function getSelectedValues(tableId) {
-  var checkboxes = document.querySelectorAll('#'+tableId+' .checkboxName:checked');
-  var selectedValues = [];
-  
-  checkboxes.forEach(function(checkbox) {
-    var row = checkbox.closest('tbody tr'); // 선택된 체크박스가 속한 행
-    var textInputs = row.querySelectorAll('input[type="text"]');
-    var textInputValues = [];
-    
-    textInputs.forEach(function(textInput) {
-      textInputValues.push(textInput.value);
-    });
-    selectedValues.push({
-      checkboxValue: checkbox.value,
-      textInputValues: textInputValues
-    });
-  });
-  
-  alert('선택된 값 및 텍스트 값:' + JSON.stringify(selectedValues));
-  // 선택된 값 및 텍스트 값들을 이용하여 원하는 작업 수행 가능
+// 전체 테이블 행 삭제
+function delAllRows(tableId){
+  var tableData = document.getElementById(tableId);
+  var rowCount = tableData.rows.length;
+
+  // 테이블 행을 끝에서부터 삭제합니다.
+  for(var i = rowCount - 1; i > 0; i--){
+    tableData.deleteRow(i);
+  }
+}
+
+function printIfNotNull(input) {
+  if (input !== null && input !== undefined && input.length != 0 ) {
+    return true;
+  }
+  return false;
 }

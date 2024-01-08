@@ -43,4 +43,111 @@
         NO = #{NO}
 </update>
 
+
+<insert id="clsfInsert" parameterType="Map" >
+MERGE INTO /* SQL ID : CodeMapper.clsfInsert*/ 
+     CLSFC  tgt
+                USING (
+            SELECT 
+                #{NO} AS NO,
+                #{SECTION_CD} AS SECTION_CD,
+                #{CLSFC_CD} AS CLSFC_CD,
+                #{CLSFC_NM} AS CLSFC_NM,
+                #{ITEM_01} AS ITEM_01,
+                #{ITEM_02} AS ITEM_02,
+                #{ITEM_03} AS ITEM_03,
+                #{ITEM_04} AS ITEM_04,
+                #{ITEM_05} AS ITEM_05,
+                #{ITEM_06} AS ITEM_06,
+                #{ITEM_07} AS ITEM_07,
+                #{ITEM_08} AS ITEM_08,
+                #{ITEM_09} AS ITEM_09,
+                #{ITEM_10} AS ITEM_10,
+                #{USE_YN} AS USE_YN
+            FROM
+                DUAL
+                )  src
+        ON
+            (tgt.SECTION_CD = src.SECTION_CD and tgt.NO = src.NO)
+            WHEN MATCHED
+        THEN  UPDATE
+        SET
+            tgt.CLSFC_CD = src.CLSFC_CD,
+            tgt.CLSFC_NM = src.CLSFC_NM,
+            tgt.ITEM_01 = src.ITEM_01,
+            tgt.ITEM_02 = src.ITEM_02,
+            tgt.ITEM_03 = src.ITEM_03,
+            tgt.ITEM_04 = src.ITEM_04,
+            tgt.ITEM_05 = src.ITEM_05,
+            tgt.ITEM_06 = src.ITEM_06,
+            tgt.ITEM_07 = src.ITEM_07,
+            tgt.ITEM_08 = src.ITEM_08,
+            tgt.ITEM_09 = src.ITEM_09,
+            tgt.ITEM_10 = src.ITEM_10,
+            tgt.USE_YN = src.USE_YN,
+            tgt.REG_YMD = SYSDATE  
+            WHEN NOT MATCHED
+        THEN INSERT
+            (NO,
+            SECTION_CD,
+            CLSFC_CD,
+            CLSFC_NM,
+            ITEM_01,
+            ITEM_02,
+            ITEM_03,
+            ITEM_04,
+            ITEM_05,
+            ITEM_06,
+            ITEM_07,
+            ITEM_08,
+            ITEM_09,
+            ITEM_10,
+            USE_YN,
+            REG_YMD
+        ) VALUES (
+                CLSFC_SEQ.NEXTVAL,
+                src.SECTION_CD,
+                src.CLSFC_CD,
+                src.CLSFC_NM,
+                src.ITEM_01,
+                src.ITEM_02,
+                src.ITEM_03,
+                src.ITEM_04,
+                src.ITEM_05,
+                src.ITEM_06,
+                src.ITEM_07,
+                src.ITEM_08,
+                src.ITEM_09,
+                src.ITEM_10,
+                src.USE_YN,
+                SYSDATE
+        )
+
+</insert>
+
+
+<select id="clsfSelect" resultType="Map" parameterType="String">
+SELECT /* SQL ID : CodeMapper.clsfSelect*/ 
+            NO,
+            SECTION_CD,
+            CLSFC_CD,
+            CLSFC_NM,
+            ITEM_01,
+            ITEM_02,
+            ITEM_03,
+            ITEM_04,
+            ITEM_05,
+            ITEM_06,
+            ITEM_07,
+            ITEM_08,
+            ITEM_09,
+            ITEM_10,
+            USE_YN,
+            TO_CHAR(REG_YMD, 'YYYY-MM-DD') AS REG_YMD
+        FROM
+            CLSFC
+        WHERE SECTION_CD = #{SECTION_CD}
+        ORDER BY SECTION_CD, CLSFC_NM
+</select>
+
 </mapper>

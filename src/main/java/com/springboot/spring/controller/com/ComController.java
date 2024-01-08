@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -69,5 +70,24 @@ public class ComController {
         //model.addAttribute("list", "aaaaa");
         //int cnt = codeService.sectionInsert(paramMap);
         return result;
+    }
+    
+    @PostMapping("/com/clsfInsert")
+    @ResponseBody
+    public String clsfInsert(Model model, @RequestBody String jsonData) {
+        log.info("호출 : ComController.clsfInsert");
+        log.info("toString : {}" ,jsonData );
+        String result = codeService.clsfInsert(jsonData);
+        return result;
+    }
+    
+    @GetMapping("/com/clsfSelect")
+    public ResponseEntity<List<Map>>  clsfSelect(Model model,@RequestParam("SECTION_CD")  String param1) {
+        log.info("호출 : ComController.clsfSelect");
+        log.info("toString : {}" ,param1 );
+        List<Map> list = codeService.clsfSelect(param1);
+        log.info("return list : {}" ,list.toString() );
+        
+        return ResponseEntity.ok(list);
     }
 }

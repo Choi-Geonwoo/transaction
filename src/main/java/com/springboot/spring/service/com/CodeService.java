@@ -13,4 +13,12 @@ public interface CodeService {
     
     // 대분류 코드 조회
     public List<Map>  sectionSelect(Map map);
+    
+    // 중분류 코드 등록
+    public String  clsfInsert(String jsonData);
+
+    
+    // 대분류 코드 조회
+    public List<Map>  clsfSelect(String jsonData);
+    
 }
